@@ -1,6 +1,7 @@
-import React from "react";
-import Bookmark from "./bookmark";
-import RenderQualities from "./quolitie";
+import React from 'react'
+import Bookmark from './bookmark'
+import RenderQualities from './quolitie'
+import PropTypes from 'prop-types'
 
 const User = ({ user, ...rest }) => {
     return (
@@ -23,16 +24,18 @@ const User = ({ user, ...rest }) => {
                 </button>
             </td>
             <td>
-                <button
-                    onClick={() => rest.onBookMark(user._id)}>
-
+                <button onClick={() => rest.onBookMark(user._id)}>
                     <Bookmark status={user.bookmark} />
                 </button>
-
             </td>
         </tr>
-
     )
-};
+}
+
+User.propTypes = {
+    user: PropTypes.object.isRequired,
+    onDelete: PropTypes.func,
+    onBookMark: PropTypes.func
+}
 
 export default User
