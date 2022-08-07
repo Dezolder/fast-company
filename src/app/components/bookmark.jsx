@@ -1,18 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
-const Bookmark = ({ status, ...rest }) => {
-    return (
-        <span {...rest}>
-            <i
-                className={'bi bi-bookmark' + (status === true ? '-fill' : '')}
-            ></i>
-        </span>
-    )
-}
+const BookMark = ({ status }) => {
+  return (
+    <i
+      className={"bi bi-bookmark-star" + (status ? "-fill" : "")}
+      style={{ fontSize: "30px" }}
+    ></i>
+  );
+};
 
-Bookmark.propTypes = {
-    status: PropTypes.bool
-}
+BookMark.propTypes = {
+  status: PropTypes.bool.isRequired
+};
 
-export default Bookmark
+export default BookMark;

@@ -1,46 +1,43 @@
-import React, { useState } from 'react'
-import api from '../app/api'
-import SearchStatus from './components/serchStatus'
-import Users from './components/users'
+import React, { useState, useEffect } from "react";
+import api from "./api";
+import Users from "./components/users";
 
-const App = () => {
-    const [users, setUsers] = useState(api.users.fetchAll())
-    // const [mark, setMark] = useState(false)
+function App() {
+  const [users, setUsers] = useState();
 
-    const handleDelete = (userId) => {
-        setUsers(users.filter((user) => user._id !== userId))
-    }
+  useEffect(() => {
+    api.users.fetchAll().then((data) => {
+      setUsers(data);
+    });
+  }, []);
 
-    const renderPhrase = (number) => {
-        const lastOne = Number(number.toString().slice(-1))
-        if (number > 4 && number < 15) return 'человек тусанет'
-        if ([2, 3, 4].indexOf(lastOne) >= 0) return 'человека тусанут'
-        if (lastOne === 1) return 'человек тусанет'
-        return 'человек тусанет'
-    }
+  const handleDelete = (id) => {
+    setUsers((prevState) => prevState.filter((user) => user._id !== id));
+  };
 
-    const handleToogleBookMark = (id) => {
-        setUsers(
-            users.map((user) => {
-                if (user._id === id) {
-                    user.bookmark = !user.bookmark
-                }
-                return user
-            })
-        )
-    }
+  const handleToggleBookMark = (id) => {
+    setUsers(
+      users.map((user) => {
+        if (user._id === id) {
+          return { ...user, bookmark: !user.bookmark };
+        }
 
-    return (
-        <>
-            <SearchStatus length={users.length} renderPhrase={renderPhrase} />
+        return user;
+      })
+    );
+  };
 
-            <Users
-                users={users}
-                onDelete={handleDelete}
-                onBookMark={handleToogleBookMark}
-            />
-        </>
-    )
+  return (
+    <div>
+      {users && (
+        <Users
+          users={users}
+          onDelete={handleDelete}
+          onToggleBookMark={handleToggleBookMark}
+        />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

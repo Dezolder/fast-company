@@ -1,41 +1,63 @@
-import React from 'react'
-import Bookmark from './bookmark'
-import RenderQualities from './quolitie'
-import PropTypes from 'prop-types'
+import React from "react";
+import Qualitie from "./qualitie";
+import BookMark from "./bookmark";
+import PropTypes from "prop-types";
 
-const User = ({ user, ...rest }) => {
-    return (
-        <tr>
-            <td>{user.name}</td>
-            <td>
-                {user.qualities.map((item) => (
-                    <RenderQualities key={item._id} {...item} />
-                ))}
-            </td>
-            <td>{user.profession.name}</td>
-            <td>{user.completedMeetings}</td>
-            <td>{user.rate} /5</td>
-            <td>
-                <button
-                    onClick={() => rest.onDelete(user._id)}
-                    className="btn btn-outline-danger"
-                >
-                    delete
-                </button>
-            </td>
-            <td>
-                <button onClick={() => rest.onBookMark(user._id)}>
-                    <Bookmark status={user.bookmark} />
-                </button>
-            </td>
-        </tr>
-    )
-}
+const User = ({
+  name,
+  _id,
+  qualities,
+  profession,
+  completedMeetings,
+  rate,
+  onDelete,
+  bookmark,
+  onToggleBookMark
+}) => {
+  return (
+    <tr>
+      <td>{name}</td>
+      <td>
+        {qualities.map((quality) => (
+          <Qualitie key={quality._id} {...quality} />
+        ))}
+      </td>
+      <td>{profession.name}</td>
+      <td>{completedMeetings}</td>
+      <td>{rate}/5</td>
+      <td>
+        <button
+          className="btn p-0"
+          style={{ boxShadow: "none" }}
+          onClick={() => onToggleBookMark(_id)}
+        >
+          <BookMark status={bookmark} />
+        </button>
+      </td>
+      <td>
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            onDelete(_id);
+          }}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  );
+};
 
 User.propTypes = {
-    user: PropTypes.object.isRequired,
-    onDelete: PropTypes.func,
-    onBookMark: PropTypes.func
-}
+  name: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
+  qualities: PropTypes.array.isRequired,
+  profession: PropTypes.object.isRequired,
+  completedMeetings: PropTypes.number.isRequired,
+  rate: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  bookmark: PropTypes.bool.isRequired,
+  onToggleBookMark: PropTypes.func.isRequired
+};
 
-export default User
+export default User;

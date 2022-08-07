@@ -1,4 +1,6 @@
-export const paginate = (items, pageNumber, pageSize) => {
-    return [...items].splice((pageNumber - 1) * pageSize, pageSize)
-    // почему такая форма записи: [...items] ????????
+function paginate(items, pageNumber, pageSize) {
+  const startIndex = (pageNumber - 1) * pageSize;
+  return [...items].splice(startIndex, pageSize);
 }
+
+export default paginate;
