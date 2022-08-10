@@ -61,7 +61,7 @@ const Users = () => {
     setSelectedProf();
   };
 
-  const pageSize = 2;
+  const pageSize = 3;
 
   if (users) {
     const filteredUsers = users.filter((user) =>
@@ -81,6 +81,8 @@ const Users = () => {
 
     return (
       <div className="d-flex">
+        <div className="d-flex flex-column">{/* <NavBar /> */}</div>
+
         {professions && (
           <div className="d-flex flex-column flex-shrink-0 p-3">
             <GroupList
