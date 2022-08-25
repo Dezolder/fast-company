@@ -7,6 +7,7 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import SearchUser from "./searchUser";
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
@@ -14,11 +15,6 @@ const UsersList = () => {
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
     const [letter, setLetter] = useState("");
-
-    const handleLetter = (e) => {
-        console.log(e.target.value);
-        setLetter(e.target.value);
-    };
 
     const [users, setUsers] = useState();
     useEffect(() => {
@@ -43,10 +39,11 @@ const UsersList = () => {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, letter]);
 
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
+        setLetter("");
     };
 
     const handlePageChange = (pageIndex) => {
@@ -63,11 +60,9 @@ const UsersList = () => {
                     JSON.stringify(user.profession) ===
                     JSON.stringify(selectedProf)
             )
-            : (
-                // (letter !== "") && clearFilter(),
-                users.filter((user) => user.name.includes(letter))
-                // это можно сделать через регулярные выражения?
-            );
+            : letter
+                ? users.filter((user) => user.name.toLocaleLowerCase().includes(letter.toLocaleLowerCase()))
+                : users;
 
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
@@ -79,6 +74,10 @@ const UsersList = () => {
         function clearFilter() {
             setSelectedProf();
         }
+        const handleLetter = (e) => {
+            setSelectedProf();
+            setLetter(e.target.value);
+        };
 
         return (
             <div className="d-flex">
@@ -99,8 +98,8 @@ const UsersList = () => {
                     </div>
                 )}
                 <div className="d-flex flex-column">
-                    <SearchStatus length={count} onSearch={handleLetter} />
-                    <input
+                    <SearchStatus length={count} />
+                    <SearchUser
                         type="text"
                         placeholder="Search User"
                         name="search"
