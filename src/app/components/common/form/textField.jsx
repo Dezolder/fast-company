@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ label, type, name, value, onChange, error, placeholder }) => {
+const TextField = ({ label, type, name, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = ({ target }) => {
@@ -15,17 +15,17 @@ const TextField = ({ label, type, name, value, onChange, error, placeholder }) =
     };
     return (
         <div className="mb-4">
-            <label htmlFor={name}>{label}</label>
+            <label htmlFor={name}> {label}</label>
             <div className="input-group has-validation">
                 <input
                     type={showPassword ? "text" : type}
                     id={name}
                     name={name}
                     value={value}
-                    placeholder={placeholder}
                     onChange={handleChange}
                     className={getInputClasses()}
                 />
+
                 {type === "password" && (
                     <button
                         className="btn btn-outline-secondary"
@@ -39,7 +39,7 @@ const TextField = ({ label, type, name, value, onChange, error, placeholder }) =
                         ></i>
                     </button>
                 )}
-                {error && <div className="invalid-feedback">{error}</div>}
+                {error && <div className="invalid-feedback ">{error}</div>}
             </div>
         </div>
     );
@@ -53,8 +53,7 @@ TextField.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    error: PropTypes.string,
-    placeholder: PropTypes.string
+    error: PropTypes.string
 };
 
 export default TextField;

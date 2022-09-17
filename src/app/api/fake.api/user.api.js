@@ -145,7 +145,7 @@ const users = [
     },
     {
         _id: "67rdca3eeb7f6fgeed47181f",
-        user: "Джоуи Триббиани",
+        name: "Джоуи Триббиани",
         email: "joe@trib.com",
         sex: "male",
         profession: professions.actor,
