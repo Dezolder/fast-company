@@ -1,29 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import api from "../../api";
 const UserCard = ({ user }) => {
-    const [userRate, setUserRate] = useState(user.rate);
     const history = useHistory();
     const handleClick = () => {
         history.push(history.location.pathname + "/edit");
     };
-
-    const handleRateDown = () => {
-        setUserRate((prevState) => --prevState);
-        // api.users.update(user._id, { ...user, rate: userRate });
-        // console.log({ ...user, rate: userRate });
-    };
-
-    const handleRateUp = () => {
-        setUserRate((prevState) => ++prevState);
-        // api.users.update(user._id, { ...user, rate: userRate });
-    };
-
-    useEffect(() => {
-        api.users.update(user._id, { ...user, rate: userRate });
-    }, [userRate]);
-
     return (
         <div className="card mb-3">
             <div className="card-body">
@@ -52,14 +34,12 @@ const UserCard = ({ user }) => {
                             <i
                                 className="bi bi-caret-down-fill text-primary"
                                 role="button"
-                                onClick={handleRateDown}
                             ></i>
                             <i
                                 className="bi bi-caret-up text-secondary"
                                 role="button"
-                                onClick={handleRateUp}
                             ></i>
-                            <span className="ms-2">{userRate}</span>
+                            <span className="ms-2">{user.rate}</span>
                         </div>
                     </div>
                 </div>
